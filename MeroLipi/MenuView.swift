@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct MenuView: View {
+    @Binding var isDarkMode: Bool
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Toggle("Dark Mode", isOn: $isDarkMode)
+            Spacer()
+            Text("This is home screen.")
+        }.padding()
     }
 }
 
 #Preview {
-    MenuView()
+    MenuView(isDarkMode: .constant(false))
 }
