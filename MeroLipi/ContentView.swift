@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isDarkMode = false
+    @AppStorage("appTheme") private var isDarkMode = false
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house") {
-                HomeView()
+                HomeView(isDarkMode: isDarkMode)
             }
             Tab("Translate", systemImage: "character.book.closed") {
                 TranslatorView()

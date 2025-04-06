@@ -7,41 +7,67 @@
 
 import SwiftUI
 
+
+struct WelcomeTextAndImageView: View {
+    let name: String
+    let isDarkMode: Bool
+
+    var imageName: String {
+        isDarkMode ? "home_screen_dark_image" : "home_screen_light_image"
+    }
+    var body: some View {
+        VStack {
+            Text("Welcome, \(name)!")
+                .font(.largeTitle.bold())
+            Image(decorative: imageName)
+                .resizable()
+                .scaledToFit()
+        }
+    }
+}
+
+struct TitleAndButtonComponentView: View {
+    let title: String
+    let buttonLabel: String
+    let onClick: () -> Void
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.title3)
+                .lineLimit(1)
+            Spacer()
+            Button(buttonLabel){
+                onClick()
+            }.buttonStyle(.borderedProminent)
+        }
+        .padding()
+    }
+}
+
 struct HomeView: View {
+    let isDarkMode: Bool
     var body: some View {
         NavigationStack {
-            VStack {
+            ScrollView {
                 VStack {
-                    Text("Welcome, bibek!")
-                        .font(.largeTitle.bold())
-                    Image(decorative: "home_screen_light_image")
-                    .resizable()
-                    .scaledToFit()
-                }
-                VStack {
-                    HStack {
-                        Text("Add Mero Lipi ?")
-                            .font(.title2)
-                        Spacer()
-                        Button {
-                        }label: {
-                            Text("Settings")
-                        }.buttonStyle(.borderedProminent)
+                    WelcomeTextAndImageView(name: "bibek", isDarkMode: isDarkMode)
+                    VStack {
+                        TitleAndButtonComponentView(
+                            title: "Add Mero Lipi keyboard?",
+                            buttonLabel: "Settings",
+                        ) {
+
+                        }
+                        TitleAndButtonComponentView(
+                            title: "Translate Roman to Nepali?",
+                            buttonLabel: "Translate",
+                        ) {
+
+                        }
                     }
-                    .padding()
-                    HStack {
-                        Text("Translate Roman to Nepali?")
-                            .font(.title2)
-                        Spacer()
-                        Button {
-                        } label: {
-                            Text("Translate")
-                        }.buttonStyle(.borderedProminent)
-                    }
-                    .padding()
                 }
+                .frame(maxHeight: .infinity)
             }
-            .frame(maxHeight: .infinity)
             .background(AppColors.background)
             .navigationTitle("MERO LIPI")
         }
@@ -49,5 +75,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(isDarkMode: false)
 }
