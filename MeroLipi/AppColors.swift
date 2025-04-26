@@ -13,7 +13,8 @@ struct AppColors {
     static let keyBackgroundColor = Color("KeyBackgroundColor")
     static let keyColor = Color("KeyColor")
     static let toolbarButtonBackgroundColor = Color("ToolbarButtonBackgroundColor")
-    static let doneButtonColorIfTextExists = Color("DoneButtonColorIfTextExists")// skip it
+    static let titleAndButtonColor = Color.indigo
+    static let doneButtonColorIfTextExists = Color("DoneButtonColorIfTextExists")
 }
 
 

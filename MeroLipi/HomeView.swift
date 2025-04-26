@@ -17,13 +17,14 @@ struct WelcomeTextAndImageView: View {
         VStack {
             Text("Welcome To Merolipi")
                 .font(.largeTitle)
-                .foregroundStyle(.blue)
+                .foregroundStyle(AppColors.titleAndButtonColor)
                 .fontWeight(.bold)
                 .padding(.top, 40)
 
             Image(decorative: imageName)
                 .resizable()
                 .scaledToFit()
+
         }
     }
 }
@@ -41,6 +42,7 @@ struct TitleAndButtonComponentView: View {
             Button(buttonLabel){
                 onClick()
             }.buttonStyle(.borderedProminent)
+                .tint(AppColors.titleAndButtonColor)
         }
         .padding()
     }
@@ -71,7 +73,7 @@ struct HomeView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: 60)
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.indigo)
                     }
 
             }

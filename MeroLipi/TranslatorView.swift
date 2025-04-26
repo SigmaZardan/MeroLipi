@@ -53,7 +53,7 @@ struct TranslatorView: View {
 
             Text("Roman To Nepali")
                 .font(.title)
-                .foregroundStyle(.blue)
+                .foregroundStyle(AppColors.titleAndButtonColor)
                 .fontWeight(.bold)
                 .padding(.top, 40)
 

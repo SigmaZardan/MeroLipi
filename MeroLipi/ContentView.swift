@@ -129,6 +129,7 @@ struct MainView: View {
                 HomeView(onAddMeroLipiClicked: onAddMeroLipiClicked)
                     .background(AppColors.background)
             }
+
             Tab("Translate", systemImage: "character.book.closed") {
                 TranslatorView()
                     .background(AppColors.background)
@@ -138,7 +139,7 @@ struct MainView: View {
                 MenuView(isDarkMode:$isDarkMode )
                     .background(AppColors.background)
             }
-        }
+        }.tint(AppColors.titleAndButtonColor)
     }
 }
 

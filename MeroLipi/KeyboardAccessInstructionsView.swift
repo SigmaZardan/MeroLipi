@@ -12,29 +12,22 @@ import UIKit
 struct OnboardingStepHeaderView: View {
     @Environment(\.colorScheme) var colorScheme
     let stepNumber: Int
-    let stepLabel: String
-
 
     var imageName: String {
         colorScheme == .light ? "home_screen_light_image": "home_screen_dark_image"
     }
+
     var body: some View {
         VStack{
-            ZStack {
                 Image(systemName: "keyboard.fill")
                     .resizable()
+                    .scaledToFit()
                     .foregroundStyle(
                         AppColors.keyboardForegroundColor
                     )
                     .padding()
 
-                Image(decorative: imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height:200)
-            }
-
-            Text("Step \(stepNumber) of 2: \(stepLabel)")
+            Text("Step \(stepNumber) of 2: Setup Mero Lipi")
                 .font(.title2.bold())
         }
     }
@@ -49,7 +42,7 @@ struct InstructionView: View {
     var body: some View {
         HStack {
             Image(systemName: iconName)
-                .foregroundStyle(.blue)
+                .foregroundStyle(AppColors.titleAndButtonColor)
             HightlightedInstructionTextView(
                 fullText: instruction,
                 textToBold:instructionPortionToBold
@@ -86,7 +79,7 @@ struct FirstStepInstructionView: View {
     var onStartedClick: (() -> Void) = {}
     var body: some View {
         ScrollView {
-            OnboardingStepHeaderView(stepNumber: 1, stepLabel: "Set up MeroLipi")
+            OnboardingStepHeaderView(stepNumber: 1)
 
             InstructionView(
                 instruction: "Tap General",
@@ -123,21 +116,24 @@ struct SecondStepInstructionView: View {
     let onFinishSetupClicked: () -> Void
     var body: some View {
         ScrollView {
+
+            OnboardingStepHeaderView(stepNumber: 2)
             InstructionView(iconName: "globe", instruction: "Tap and hold Globe icon", instructionPortionToBold: "Globe")
             InstructionView(instruction: "Tap MeroLipiKeyboard to switch keyboards", instructionPortionToBold: "MeroLipiKeyboard")
             InstructionView(iconName: "keyboard",instruction: "Try typing in Nepali", instructionPortionToBold: "Nepali")
-            TextField("", text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Type here", text: $text)
                 .font(.title3)
                 .padding()
                 .background(Color.indigo.opacity(0.2), in: Capsule())
                 .disableAutocorrection(true)
+                .padding()
 
             if text.isEmpty == false {
                 HightlightedInstructionTextView(fullText: "Use Globe icon to switch between keyboards", textToBold: "keyboards")
-                Button("Finish Setup"){
-                    onFinishSetupClicked()
-                }.buttonStyle(.borderedProminent)
+                SetupButton(
+                    buttonTitle: "Finish Setup",
+                    onClick: onFinishSetupClicked
+                )
             }
         }
     }
@@ -153,6 +149,7 @@ struct SetupButton: View {
         }label: {
             Text(buttonTitle)
         }.buttonStyle(.borderedProminent)
+            .tint(AppColors.titleAndButtonColor)
             .padding()
     }
 }
