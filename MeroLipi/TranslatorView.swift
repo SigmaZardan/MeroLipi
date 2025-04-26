@@ -37,16 +37,24 @@ You are an AI linguistic model functioning exclusively as a highly accurate Roma
 
 struct TranslatorView: View {
 
+    private let pasteBoard = UIPasteboard.general
+
     let model = GenerativeModel(
         name: "gemini-2.5-flash-preview-04-17",
         apiKey: APIKey.default,
         systemInstruction: systemPromptText
     )
 
-    @State var userPrompt = ""
-    @State var response = ""
+    @State private var userPrompt = ""
+    @State private var response = ""
     @FocusState var isFocused:Bool
     @State private var isLoading = false
+    @State private var isPresented = false
+    @State private var isError = false
+    @State private var errorMessage = ""
+
+
+
 
     var body: some View {
         VStack {
@@ -57,14 +65,9 @@ struct TranslatorView: View {
                 .fontWeight(.bold)
                 .padding(.top, 40)
 
-            if response.isEmpty == false {
-                Text("Tap and Hold to copy")
-                    .font(.caption)
-                // use a copy button
-            }
+
 
             ZStack{
-
                 ScrollView{
                     Text(response)
                         .font(.title2)
@@ -76,13 +79,65 @@ struct TranslatorView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .indigo))
                         .scaleEffect(4)
                 }
+
+                if isError {
+                    VStack(spacing: 16) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.system(size: 50))
+                            .foregroundColor(.red)
+
+                        Text(errorMessage)
+                            .font(.system(.title2, design: .rounded))
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.center)
+                            .padding()
+
+                        Button(action: {
+                            // Retry action or dismiss
+                            generateResponse()
+                            isError = false
+                        }) {
+                            Text("Try Again")
+                                .font(.headline)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.red)
+                                .foregroundColor(.white)
+                                .cornerRadius(12)
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(20)
+                    .shadow(radius: 10)
+                    .padding()
+                }
+
             }
 
 
 
+            if response.isEmpty == false {
+                Button {
+                    isPresented = true
+                    pasteBoard.string = response
+                } label: {
+                    Image(systemName: "document.on.document")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 40)
+                }
+                .alert(
+                    "Copied!",
+                    isPresented: $isPresented,
+                    actions: { Button("Ok") { }
+                    })
+                .padding()
+            }
 
             HStack {
-
                 TextField("Roman text", text: $userPrompt, axis: .vertical)
                     .lineLimit(2)
                     .font(.title3)
@@ -104,6 +159,9 @@ struct TranslatorView: View {
                         .scaledToFit()
                         .frame(maxWidth: 40)
                         .disabled(userPrompt.isEmpty)
+                        .tint(
+                            userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
+                        )
                 }
             }
         }
@@ -112,19 +170,24 @@ struct TranslatorView: View {
 
     func generateResponse() {
         isLoading = true
-        response = ""
-
         Task {
             do {
                 let result = try await model.generateContent(userPrompt)
                 response = result.text ?? "No response found"
-                userPrompt = ""
                 isLoading = false
             } catch {
-                print("\(error.localizedDescription)")
+                print(error.localizedDescription)
+                handleErrors()
             }
-
         }
+
+        userPrompt = ""
+    }
+
+
+    func handleErrors() {
+        isError = true
+        errorMessage = "Oops! Something went wrong"
     }
 }
 
