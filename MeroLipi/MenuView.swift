@@ -14,7 +14,6 @@ struct MenuView: View {
         VStack {
             Toggle("Dark Mode", isOn: $isDarkMode)
             Spacer()
-            Text("This is home screen.")
         }.padding()
     }
 }

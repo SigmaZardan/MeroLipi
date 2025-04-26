@@ -9,16 +9,18 @@ import SwiftUI
 
 
 struct WelcomeTextAndImageView: View {
-    let name: String
-    let isDarkMode: Bool
-
+    @Environment(\.colorScheme) var colorScheme
     var imageName: String {
-        isDarkMode ? "home_screen_dark_image" : "home_screen_light_image"
+        colorScheme == .dark ? "home_screen_dark_image" : "home_screen_light_image"
     }
     var body: some View {
         VStack {
-            Text("Welcome, \(name)!")
-                .font(.largeTitle.bold())
+            Text("Welcome To Merolipi")
+                .font(.largeTitle)
+                .foregroundStyle(.blue)
+                .fontWeight(.bold)
+                .padding(.top, 40)
+
             Image(decorative: imageName)
                 .resizable()
                 .scaledToFit()
@@ -45,35 +47,37 @@ struct TitleAndButtonComponentView: View {
 }
 
 struct HomeView: View {
-    let isDarkMode: Bool
+    let onAddMeroLipiClicked: () -> Void
     var body: some View {
-        NavigationStack {
             ScrollView {
-                VStack {
-                    WelcomeTextAndImageView(name: "bibek", isDarkMode: isDarkMode)
+                    WelcomeTextAndImageView()
                     VStack {
                         TitleAndButtonComponentView(
                             title: "Add Mero Lipi keyboard?",
                             buttonLabel: "Settings",
                         ) {
-
+                            // navigate to the first screen
+                            // if the keyboard extension has already been installed then
+                            // go to the second page
+                            // otherwise go to the first page
+                            onAddMeroLipiClicked()
                         }
-                        TitleAndButtonComponentView(
-                            title: "Translate Roman to Nepali?",
-                            buttonLabel: "Translate",
-                        ) {
+                        InstructionView(
+                            instruction: "Wanna try Roman to Nepali translation?",
+                            instructionPortionToBold: "Roman to Nepali translation?"
+                        )
 
-                        }
+                        Image(systemName:"arrowshape.down.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 60)
+                            .foregroundStyle(.blue)
                     }
-                }
-                .frame(maxHeight: .infinity)
+
             }
-            .background(AppColors.background)
-            .navigationTitle("MERO LIPI")
-        }
     }
 }
 
 #Preview {
-    HomeView(isDarkMode: false)
+    HomeView(onAddMeroLipiClicked: {})
 }

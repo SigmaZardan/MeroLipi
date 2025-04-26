@@ -9,6 +9,11 @@ import SwiftUI
 
 struct AppColors {
     static let background = Color("BackgroundColor")
+    static let keyboardForegroundColor = Color(red: 173/255, green: 184/255, blue: 139/255)
+    static let keyBackgroundColor = Color("KeyBackgroundColor")
+    static let keyColor = Color("KeyColor")
+    static let toolbarButtonBackgroundColor = Color("ToolbarButtonBackgroundColor")
+    static let doneButtonColorIfTextExists = Color("DoneButtonColorIfTextExists")// skip it
 }
 
 

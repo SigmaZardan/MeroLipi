@@ -9,6 +9,34 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>MeroLipiKeyboard.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>6005A9602DAD62FD00AE8007</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60EB865A2DA2141C00CB64E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60EB86672DA2141E00CB64E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60EB86712DA2141E00CB64E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

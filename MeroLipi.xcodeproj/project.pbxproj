@@ -6,7 +6,21 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6005A9682DAD62FD00AE8007 /* MeroLipiKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6005A9612DAD62FD00AE8007 /* MeroLipiKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6005A9952DAD660D00AE8007 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 6005A9942DAD660D00AE8007 /* MCEmojiPicker */; };
+		60B1D4E82DB6488F00A18C81 /* MCEmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 60B1D4E72DB6488F00A18C81 /* MCEmojiPicker */; };
+		60BB2B462DB6AD9700A68853 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 60BB2B452DB6AD9700A68853 /* GoogleGenerativeAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
+		6005A9662DAD62FD00AE8007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 60EB86532DA2141C00CB64E7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6005A9602DAD62FD00AE8007;
+			remoteInfo = MeroLipiKeyboard;
+		};
 		60EB86692DA2141E00CB64E7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 60EB86532DA2141C00CB64E7 /* Project object */;
@@ -23,15 +37,70 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6005A9692DAD62FD00AE8007 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6005A9682DAD62FD00AE8007 /* MeroLipiKeyboard.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		6005A9612DAD62FD00AE8007 /* MeroLipiKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MeroLipiKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		60EB865B2DA2141C00CB64E7 /* MeroLipi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeroLipi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60EB86682DA2141E00CB64E7 /* MeroLipiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeroLipiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		60EB86722DA2141E00CB64E7 /* MeroLipiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeroLipiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6005A96C2DAD62FD00AE8007 /* Exceptions for "MeroLipiKeyboard" folder in "MeroLipiKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */;
+		};
+		6005A9922DAD651900AE8007 /* Exceptions for "MeroLipi" folder in "MeroLipiKeyboard" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AppColors.swift,
+				Assets.xcassets,
+				KeyboardLayoutManager.swift,
+				KeyboardSoundManager.swift,
+				MeroLipiKeyboardView.swift,
+			);
+			target = 6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */;
+		};
+		60B1D4C12DB6480200A18C81 /* Exceptions for "MeroLipiKeyboard" folder in "MeroLipi" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				KeyboardViewController.swift,
+			);
+			target = 60EB865A2DA2141C00CB64E7 /* MeroLipi */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6005A9622DAD62FD00AE8007 /* MeroLipiKeyboard */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				60B1D4C12DB6480200A18C81 /* Exceptions for "MeroLipiKeyboard" folder in "MeroLipi" target */,
+				6005A96C2DAD62FD00AE8007 /* Exceptions for "MeroLipiKeyboard" folder in "MeroLipiKeyboard" target */,
+			);
+			path = MeroLipiKeyboard;
+			sourceTree = "<group>";
+		};
 		60EB865D2DA2141C00CB64E7 /* MeroLipi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6005A9922DAD651900AE8007 /* Exceptions for "MeroLipi" folder in "MeroLipiKeyboard" target */,
+			);
 			path = MeroLipi;
 			sourceTree = "<group>";
 		};
@@ -48,10 +117,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6005A95E2DAD62FD00AE8007 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6005A9952DAD660D00AE8007 /* MCEmojiPicker in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60EB86582DA2141C00CB64E7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60B1D4E82DB6488F00A18C81 /* MCEmojiPicker in Frameworks */,
+				60BB2B462DB6AD9700A68853 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +157,7 @@
 				60EB865D2DA2141C00CB64E7 /* MeroLipi */,
 				60EB866B2DA2141E00CB64E7 /* MeroLipiTests */,
 				60EB86752DA2141E00CB64E7 /* MeroLipiUITests */,
+				6005A9622DAD62FD00AE8007 /* MeroLipiKeyboard */,
 				60EB865C2DA2141C00CB64E7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,6 +168,7 @@
 				60EB865B2DA2141C00CB64E7 /* MeroLipi.app */,
 				60EB86682DA2141E00CB64E7 /* MeroLipiTests.xctest */,
 				60EB86722DA2141E00CB64E7 /* MeroLipiUITests.xctest */,
+				6005A9612DAD62FD00AE8007 /* MeroLipiKeyboard.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +176,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6005A96D2DAD62FD00AE8007 /* Build configuration list for PBXNativeTarget "MeroLipiKeyboard" */;
+			buildPhases = (
+				6005A95D2DAD62FD00AE8007 /* Sources */,
+				6005A95E2DAD62FD00AE8007 /* Frameworks */,
+				6005A95F2DAD62FD00AE8007 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6005A9622DAD62FD00AE8007 /* MeroLipiKeyboard */,
+			);
+			name = MeroLipiKeyboard;
+			packageProductDependencies = (
+				6005A9942DAD660D00AE8007 /* MCEmojiPicker */,
+			);
+			productName = MeroLipiKeyboard;
+			productReference = 6005A9612DAD62FD00AE8007 /* MeroLipiKeyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		60EB865A2DA2141C00CB64E7 /* MeroLipi */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 60EB867C2DA2141E00CB64E7 /* Build configuration list for PBXNativeTarget "MeroLipi" */;
@@ -102,16 +206,20 @@
 				60EB86572DA2141C00CB64E7 /* Sources */,
 				60EB86582DA2141C00CB64E7 /* Frameworks */,
 				60EB86592DA2141C00CB64E7 /* Resources */,
+				6005A9692DAD62FD00AE8007 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6005A9672DAD62FD00AE8007 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				60EB865D2DA2141C00CB64E7 /* MeroLipi */,
 			);
 			name = MeroLipi;
 			packageProductDependencies = (
+				60B1D4E72DB6488F00A18C81 /* MCEmojiPicker */,
+				60BB2B452DB6AD9700A68853 /* GoogleGenerativeAI */,
 			);
 			productName = MeroLipi;
 			productReference = 60EB865B2DA2141C00CB64E7 /* MeroLipi.app */;
@@ -173,6 +281,9 @@
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
+					6005A9602DAD62FD00AE8007 = {
+						CreatedOnToolsVersion = 16.3;
+					};
 					60EB865A2DA2141C00CB64E7 = {
 						CreatedOnToolsVersion = 16.3;
 					};
@@ -195,6 +306,10 @@
 			);
 			mainGroup = 60EB86522DA2141C00CB64E7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6005A9932DAD660D00AE8007 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */,
+				60BB2B442DB6AD9700A68853 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 60EB865C2DA2141C00CB64E7 /* Products */;
 			projectDirPath = "";
@@ -203,11 +318,19 @@
 				60EB865A2DA2141C00CB64E7 /* MeroLipi */,
 				60EB86672DA2141E00CB64E7 /* MeroLipiTests */,
 				60EB86712DA2141E00CB64E7 /* MeroLipiUITests */,
+				6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6005A95F2DAD62FD00AE8007 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60EB86592DA2141C00CB64E7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +355,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6005A95D2DAD62FD00AE8007 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		60EB86572DA2141C00CB64E7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -256,6 +386,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6005A9672DAD62FD00AE8007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */;
+			targetProxy = 6005A9662DAD62FD00AE8007 /* PBXContainerItemProxy */;
+		};
 		60EB866A2DA2141E00CB64E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 60EB865A2DA2141C00CB64E7 /* MeroLipi */;
@@ -269,6 +404,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		6005A96A2DAD62FD00AE8007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeroLipiKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MeroLipiKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bibek.MeroLipi.MeroLipiKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6005A96B2DAD62FD00AE8007 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeroLipiKeyboard/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MeroLipiKeyboard;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = bibek.MeroLipi.MeroLipiKeyboard;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		60EB867A2DA2141E00CB64E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -513,6 +696,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6005A96D2DAD62FD00AE8007 /* Build configuration list for PBXNativeTarget "MeroLipiKeyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6005A96A2DAD62FD00AE8007 /* Debug */,
+				6005A96B2DAD62FD00AE8007 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		60EB86562DA2141C00CB64E7 /* Build configuration list for PBXProject "MeroLipi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -550,6 +742,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6005A9932DAD660D00AE8007 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/izyumkin/MCEmojiPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
+		60BB2B442DB6AD9700A68853 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6005A9942DAD660D00AE8007 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6005A9932DAD660D00AE8007 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+		60B1D4E72DB6488F00A18C81 /* MCEmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6005A9932DAD660D00AE8007 /* XCRemoteSwiftPackageReference "MCEmojiPicker" */;
+			productName = MCEmojiPicker;
+		};
+		60BB2B452DB6AD9700A68853 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60BB2B442DB6AD9700A68853 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 60EB86532DA2141C00CB64E7 /* Project object */;
 }
