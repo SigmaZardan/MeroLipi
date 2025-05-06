@@ -7,6 +7,23 @@
 
 import SwiftUI
 
+struct TitleText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundStyle(AppColors.titleAndButtonColor)
+            .fontWeight(.bold)
+            .padding(.top, 40)
+    }
+}
+
+extension View {
+    func titleText() -> some View {
+        modifier(TitleText())
+    }
+}
+
+
 
 struct WelcomeTextAndImageView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -16,10 +33,7 @@ struct WelcomeTextAndImageView: View {
     var body: some View {
         VStack {
             Text("Welcome To Merolipi")
-                .font(.largeTitle)
-                .foregroundStyle(AppColors.titleAndButtonColor)
-                .fontWeight(.bold)
-                .padding(.top, 40)
+                .titleText()
 
             Image(decorative: imageName)
                 .resizable()

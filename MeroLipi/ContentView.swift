@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 
 @Observable
@@ -17,7 +18,7 @@ class PathStore  {
     }
     // create a path to save the navigation path
     private let savePath = URL.documentsDirectory.appending(path: "SavedPath")
-
+    
     init() {
         if let data = try? Data(contentsOf: savePath) {
             let decoder = JSONDecoder()
@@ -26,15 +27,15 @@ class PathStore  {
                 return
             }
         }
-
+        
         path = NavigationPath()
     }
-
+    
     func save() {
         guard let representation = path.codable else {
             return
         }
-
+        
         do {
             let encoder = JSONEncoder()
             let data = try encoder.encode(representation)
@@ -59,7 +60,7 @@ struct ContentView: View {
     @AppStorage("appTheme") private var isDarkMode = false
     @AppStorage("KeyboardInstalled") private var isMeroLipiInstalled = false
     @State private var pathStore = PathStore()
-
+    
     var body: some View {
         NavigationStack(path: $pathStore.path) {
             FirstStepInstructionView(onStartedClick: {
@@ -79,12 +80,12 @@ struct ContentView: View {
                 switch newScreen  {
                     case .first: FirstStepInstructionView()
                             .background(AppColors.background)
-
+                        
                     case .second: SecondStepInstructionView(
                         onFinishSetupClicked: {pathStore
                             .path.append(Screen.main)})
                     .background(AppColors.background)
-
+                        
                     case .main: MainView(isDarkMode: $isDarkMode) {
                         if isMeroLipiInstalled == true {
                             // navigate to the second screen
@@ -98,8 +99,8 @@ struct ContentView: View {
             } .preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
-
-
+    
+    
     func checkForKeyboardExtension() {
         if let keyboards = UserDefaults.standard.array(forKey: "AppleKeyboards") as? [String] {
             if keyboards
@@ -122,23 +123,29 @@ struct ContentView: View {
 struct MainView: View {
     @Binding var isDarkMode: Bool
     let onAddMeroLipiClicked: () -> Void
-
+    
     var body: some View {
-        TabView{
+        TabView {
             Tab("Home", systemImage: "house.fill") {
                 HomeView(onAddMeroLipiClicked: onAddMeroLipiClicked)
                     .background(AppColors.background)
             }
-
+            
             Tab("Translate", systemImage: "character.book.closed") {
                 TranslatorView()
                     .background(AppColors.background)
-
             }
+            
+            Tab("Saved", systemImage: "doc.text.fill") {
+                ResponseView()
+                    .background(AppColors.background)
+            }
+            
             Tab("Menu", systemImage: "list.bullet") {
                 MenuView(isDarkMode:$isDarkMode )
                     .background(AppColors.background)
             }
+            
         }.tint(AppColors.titleAndButtonColor)
     }
 }

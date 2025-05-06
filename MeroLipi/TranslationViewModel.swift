@@ -8,15 +8,16 @@
 import Foundation
 import GoogleGenerativeAI
 import UIKit
+import SwiftData
 
 class AIModelData {
     static let name = "gemini-2.5-flash-preview-04-17"
     static let apiKey = APIKey.default
     static let systemInstruction = """
         You are an AI linguistic model functioning exclusively as a highly accurate Roman Nepali to Devanagari Nepali translator. Your SOLE purpose is to convert input text written in Roman Nepali (Nepali language using the English alphabet, reflecting common, everyday usage) into its equivalent standard Devanagari Nepali script.
-
+        
         **Core Directives & Constraints:**
-
+        
         1.  **Task:** Translate Roman Nepali input directly to Devanagari Nepali output.
         2.  **Input Focus:** You MUST be able to understand and correctly interpret Roman Nepali as it is commonly typed by Nepali people in daily conversations, messages, and social media. This includes, but is not limited to:
             * **Phonetic Variations:** Recognize multiple common Roman spellings for the same Nepali sound/word (e.g., `chha`, `cha`, `6` for छ; `chhya`, `chya`, `xya` for छ्या; `hoina`, `haina` for होइन; `pani`, `poni` for पनि).
@@ -35,7 +36,7 @@ class AIModelData {
             * NEVER ask clarifying questions.
             * NEVER provide explanations about the translation or the process.
             * NEVER translate *from* Devanagari *to* Roman. Your function is one-way only.
-
+        
         **Primary Goal:** Your success is measured by your ability to seamlessly translate the diverse and often informal Roman Nepali used in everyday digital communication into accurate Devanagari script, following all output constraints precisely. Interpret ambiguities based on the most common Nepali usage. Strict adherence to these instructions is mandatory for all responses.
         """
 
@@ -45,19 +46,22 @@ class AIModelData {
 extension TranslatorView {
     @Observable
     class ViewModel{
-        let aiModel: GenerativeModel
-         var userPrompt = ""
+        private let aiModel: GenerativeModel
+        var userPrompt = ""
         private(set) var response = ""
-         var isCopyAlertPresented = false
-        private let pasteBoard = UIPasteboard.general
+        var isCopyAlertPresented = false
         private(set) var isLoading = false
         private(set) var isError = false
-        init() {
+        private let dataSource: SwiftDataService
+
+
+        init(dataSource: SwiftDataService) {
             self.aiModel = GenerativeModel(
                 name: AIModelData.name,
                 apiKey: AIModelData.apiKey,
                 systemInstruction: AIModelData.systemInstruction
             )
+            self.dataSource = dataSource
         }
 
 
@@ -65,13 +69,10 @@ extension TranslatorView {
             userPrompt = ""
         }
 
-
         func copyToClipBoard() {
             isCopyAlertPresented = true
-            pasteBoard.string =  response
+            dataSource.pasteBoard.string = response
         }
-
-
 
         func generateResponse() {
             isLoading = true
@@ -79,7 +80,6 @@ extension TranslatorView {
                 do {
                     let result = try await aiModel.generateContent(userPrompt)
                     response = result.text ?? "No response found"
-                    // save the response
                     resetPrompt()
                     isLoading = false
                 } catch {
@@ -97,6 +97,11 @@ extension TranslatorView {
         func handleRetry() {
             generateResponse()
             isError = false
+        }
+
+        func saveResponse() {
+            let response = AIResponse(response: response)
+            dataSource.addResponse(response)
         }
     }
 }

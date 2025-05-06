@@ -7,34 +7,41 @@
 
 import SwiftUI
 import GoogleGenerativeAI
-
+import SwiftData
 
 
 
 struct TranslatorView: View {
-      @State private var viewModel = ViewModel()
-
+    @State private var viewModel = ViewModel(
+        dataSource: SwiftDataService.shared
+    )
 
     @FocusState var isFocused:Bool
     let errorMessage = "Oops! something went wrong.☹️"
 
-
     var body: some View {
         VStack {
-
             Text("Roman To Nepali")
-                .font(.title)
-                .foregroundStyle(AppColors.titleAndButtonColor)
-                .fontWeight(.bold)
-                .padding(.top, 40)
-
-
+                .titleText()
 
             ZStack{
                 ScrollView{
                     Text(viewModel.response)
                         .font(.title2)
-                        .textSelection(.enabled)
+                        .padding()
+                        .contextMenu {
+                            Button {
+                                viewModel.copyToClipBoard()
+                            }label: {
+                                Label("Copy", systemImage: "document.on.document")
+                            }
+
+                            Button {
+                                viewModel.saveResponse()
+                            } label: {
+                                Label("Save", systemImage: "document.on.document")
+                            }
+                        }
                 }
 
                 if viewModel.isLoading {
