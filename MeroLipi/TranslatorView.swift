@@ -24,6 +24,7 @@ struct TranslatorView: View {
             Text("Roman To Nepali")
                 .titleText()
 
+
             ZStack{
                 ScrollView{
                     Text(viewModel.response)
@@ -49,96 +50,74 @@ struct TranslatorView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .indigo))
                         .scaleEffect(4)
                 }
+            }
 
-                if viewModel.isError {
-                    VStack(spacing: 16) {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .font(.system(size: 50))
-                            .foregroundColor(.red)
-
-                        Text(errorMessage)
-                            .font(.system(.title2, design: .rounded))
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.center)
-                            .padding()
-
-                        Button(action: {
-                            viewModel.handleRetry()
-                        }) {
-                            Text("Try Again")
-                                .font(.headline)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.red)
-                                .foregroundColor(.white)
-                                .cornerRadius(12)
-                        }
-                        .padding(.horizontal)
+            VStack {
+                if viewModel.response.isEmpty == false {
+                    Button {
+                        viewModel.copyToClipBoard()
+                    } label: {
+                        Image(systemName: "document.on.document")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 40)
                     }
                     .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(20)
-                    .shadow(radius: 10)
+                }
+
+
+                HStack{
+                    TextField(
+                        "Try typing in Roman",
+                        text: $viewModel.userPrompt,
+                        axis: .vertical
+                    )
+                    .lineLimit(2)
+                    .font(.title3)
                     .padding()
-                }
+                    .background(Color.indigo.opacity(0.2), in: Capsule())
+                    .disableAutocorrection(true)
+                    .onSubmit {
+                        viewModel.generateResponse()
+                    }
+                    .focused($isFocused)
 
-            }
+                    Button {
+                        viewModel.generateResponse()
+                        isFocused = false
+                    } label: {
 
-
-
-            if viewModel.response.isEmpty == false {
-                Button {
-                    viewModel.copyToClipBoard()
-                } label: {
-                    Image(systemName: "document.on.document")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 40)
-                }
-                .alert(
-                    "Copied!",
-                    isPresented: $viewModel.isCopyAlertPresented,
-                    actions: { Button("Ok") { }
-                    })
-                .padding()
-            }
-
-            HStack {
-                TextField(
-                    "Roman text",
-                    text: $viewModel.userPrompt,
-                    axis: .vertical
-                )
-                .lineLimit(2)
-                .font(.title3)
-                .padding()
-                .background(Color.indigo.opacity(0.2), in: Capsule())
-                .disableAutocorrection(true)
-                .onSubmit {
-                    viewModel.generateResponse()
-                }
-                .focused($isFocused)
-
-                Button {
-                    viewModel.generateResponse()
-                    isFocused = false
-                } label: {
-
-                    Image(systemName: "arrowshape.up.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 40)
-                        .disabled(viewModel.userPrompt.isEmpty)
-                        .tint(
-                            viewModel.userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
-                        )
+                        Image(systemName: "arrowshape.up.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 40)
+                            .disabled(viewModel.userPrompt.isEmpty)
+                            .tint(
+                                viewModel.userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
+                            )
+                    }
                 }
             }
         }
+        .alert(
+            "Copied!",
+            isPresented: $viewModel.isCopyAlertPresented,
+            actions: { Button("Ok") { }
+            })
+        .alert(errorMessage,
+               isPresented:  $viewModel.isError,
+               actions: {
+            Button("Retry", action: viewModel.handleRetry)
+            Button("Ok") {
+                viewModel.resetLoading()
+                viewModel.resetPrompt()
+            }
+        }
+        )
         .padding()
     }
 }
+
 
 #Preview {
     TranslatorView()

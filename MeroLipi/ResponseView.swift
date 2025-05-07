@@ -19,21 +19,30 @@ struct ResponseView: View {
                 Text("Saved Translations")
                     .titleText()
 
-                List {
-                    ForEach(viewModel.responses) { data in
-                        Text(data.response)
-                            .listRowBackground(Color.clear)
-                            .textSelection(.enabled)
-                            .contextMenu {
-                                Button {
-                                    viewModel.copyToClipBoard(data.response)
-                                }label: {
-                                    Label("Copy", systemImage: "document.on.document")
-                                }
-                            }
+                if viewModel.responses.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Translations", systemImage: "document.fill")
+                    } description: {
+                        Text("The translations you save will appear here.")
                     }
-                    .onDelete(perform: viewModel.deleteResponse)
-                }.scrollContentBackground(.hidden)
+                } else {
+                    List {
+                        ForEach(viewModel.responses) { data in
+                            Text(data.response)
+                                .listRowBackground(Color.clear)
+                                .textSelection(.enabled)
+                                .contextMenu {
+                                    Button {
+                                        viewModel.copyToClipBoard(data.response)
+                                    }label: {
+                                        Label("Copy", systemImage: "document.on.document")
+                                    }
+                                }
+                        }
+                        .onDelete(perform: viewModel.deleteResponse)
+
+                    }.scrollContentBackground(.hidden)
+                }
             }
         }.onAppear {
             viewModel.fetchResponses()

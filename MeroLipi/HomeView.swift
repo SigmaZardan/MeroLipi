@@ -79,15 +79,9 @@ struct HomeView: View {
                             onAddMeroLipiClicked()
                         }
                         InstructionView(
-                            instruction: "Wanna try Roman to Nepali translation?",
-                            instructionPortionToBold: "Roman to Nepali translation?"
+                            instruction: "Tap on Translation tab for Roman To Nepali",
+                            instructionPortionToBold: "Roman To Nepali"
                         )
-
-                        Image(systemName:"arrowshape.down.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 60)
-                            .foregroundStyle(.indigo)
                     }
 
             }

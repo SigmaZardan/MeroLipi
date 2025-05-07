@@ -51,7 +51,7 @@ extension TranslatorView {
         private(set) var response = ""
         var isCopyAlertPresented = false
         private(set) var isLoading = false
-        private(set) var isError = false
+         var isError = false
         private let dataSource: SwiftDataService
 
 
@@ -62,6 +62,10 @@ extension TranslatorView {
                 systemInstruction: AIModelData.systemInstruction
             )
             self.dataSource = dataSource
+        }
+
+        func resetLoading() {
+            isLoading = false
         }
 
 
