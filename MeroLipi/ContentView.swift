@@ -76,6 +76,13 @@ struct ContentView: View {
                     }
                 }
             }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Skip") {
+                        pathStore.path.append(Screen.main)
+                    }
+                }
+            }
             .navigationDestination(for: Screen.self) { newScreen in
                 switch newScreen  {
                     case .first: FirstStepInstructionView()
