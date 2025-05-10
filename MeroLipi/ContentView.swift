@@ -85,9 +85,19 @@ struct ContentView: View {
             }
             .navigationDestination(for: Screen.self) { newScreen in
                 switch newScreen  {
-                    case .first: FirstStepInstructionView()
+                    case .first: FirstStepInstructionView(
+                        onStartedClick: { openSettings()
+                        })
                             .background(AppColors.background)
-                        
+                            .onChange(of: scenePhase) {
+                                if scenePhase == .active {
+                                    checkForKeyboardExtension()
+                                    if isMeroLipiInstalled == true {
+                                        pathStore.path.append(Screen.second)
+                                    }
+                                }
+                            }
+
                     case .second: SecondStepInstructionView(
                         onFinishSetupClicked: {pathStore
                             .path.append(Screen.main)})
