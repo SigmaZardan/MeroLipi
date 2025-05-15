@@ -37,8 +37,19 @@ class SwiftDataService {
         }
 
     func addResponse(_ response: AIResponse) {
-            modelContext.insert(response)
+        let responses = fetchAIResponses()
+        var responseExists = false
+        for item in responses {
+            if item.response == response.response {
+                responseExists = true
+            }
+        }
             do {
+                if !responseExists {
+                    modelContext.insert(response)
+                } else {
+                    print("Response already exists!")
+                }
                 try modelContext.save()
             } catch {
                 fatalError(error.localizedDescription)

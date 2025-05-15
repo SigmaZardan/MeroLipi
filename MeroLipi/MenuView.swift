@@ -6,15 +6,28 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct MenuView: View {
     @Binding var isDarkMode: Bool
+    @Environment(\.requestReview) var requestReview
 
     var body: some View {
-        VStack {
-            Toggle("Dark Mode", isOn: $isDarkMode)
-            Spacer()
-        }.padding()
+        NavigationStack {
+            VStack(alignment:.leading, spacing: 8){
+                Toggle("Dark Mode", isOn: $isDarkMode)
+                Button("Rate Us") {
+                    requestReview()
+                }
+
+                NavigationLink("Privacy") {
+                    Text("pro pro ")
+                }
+                Spacer()
+            }.frame(maxWidth: .infinity)
+                .padding()
+                .background(AppColors.background)
+        }
     }
 }
 

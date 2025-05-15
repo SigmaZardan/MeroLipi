@@ -160,7 +160,7 @@ struct MainView: View {
             
             Tab("Menu", systemImage: "list.bullet") {
                 MenuView(isDarkMode:$isDarkMode )
-                    .background(AppColors.background)
+                    
             }
             
         }.tint(AppColors.titleAndButtonColor)

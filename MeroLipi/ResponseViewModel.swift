@@ -25,6 +25,7 @@ extension  ResponseView {
                 let response = responses[offset]
                 dataSource.deleteResponse(response)
             }
+            responses.remove(atOffsets: offsets)
         }
         
         func copyToClipBoard(_ response: String) {
