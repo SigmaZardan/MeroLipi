@@ -13,21 +13,18 @@ struct MenuView: View {
     @Environment(\.requestReview) var requestReview
 
     var body: some View {
-        NavigationStack {
             VStack(alignment:.leading, spacing: 8){
                 Toggle("Dark Mode", isOn: $isDarkMode)
                 Button("Rate Us") {
                     requestReview()
                 }
-
-                NavigationLink("Privacy") {
-                    Text("pro pro ")
-                }
+                    NavigationLink("Privacy") {
+                        Text("pro pro ")
+                    }
                 Spacer()
             }.frame(maxWidth: .infinity)
                 .padding()
                 .background(AppColors.background)
-        }
     }
 }
 

@@ -134,6 +134,7 @@ struct MeroLipiKeyboardView: View {
     let keyboardHeight: CGFloat
     let onDone: () -> Void
     @State private var currentText:String = ""
+    @State private var isShowingNumericalLayout = false
     @State private var isShowingSecondaryLayout = false
 
 
@@ -144,8 +145,12 @@ struct MeroLipiKeyboardView: View {
 
     let keyboardLayoutManager = KeyboardLayoutManager.shared
     var keyboardLayout: KeyboardLayout {
-        keyboardLayoutManager
-            .getLayout(for: isShowingSecondaryLayout ? .secondary : .primary)
+        let layoutToShow: KeyboardLayoutType =
+        isShowingNumericalLayout ? .numerical : (
+            isShowingSecondaryLayout ? .secondary : .primary
+        )
+        return keyboardLayoutManager
+            .getLayout(for: layoutToShow)
     }
 
     @State private var isEmojiViewPresented = false
@@ -190,16 +195,23 @@ struct MeroLipiKeyboardView: View {
                         }
 
                     HStack {
+                        KeyboardToolbarWithImageView(
+                            imageName: isShowingSecondaryLayout ? "arrowshape.up.fill": "arrowshape.up",
+                            width: proxy.size.width * 0.10,
+                            onClick:  {
+                                playAlphabetClickSound()
+                                isShowingSecondaryLayout.toggle()
+                            }
+                        )
                         KeyboardToolbarWithTextView(
-                            key: "१२३",
+                            key: isShowingNumericalLayout ? "कख" : "१२३",
                             width: proxy.size.width * 0.10
                         ) {
                             // change the layout and show numbers in nepali
                             // along with other remaining letters as well
-                            isShowingSecondaryLayout.toggle()
+                            isShowingNumericalLayout.toggle()
                             playAlphabetClickSound()
-                        }.padding(.leading, 16)
-                            .padding(.trailing,5)
+                        }
 
                         if needsInputModeSwitchKey && nextKeyboardAction != nil {
                             SelectKeyboardToolbarButtonView(
@@ -230,13 +242,13 @@ struct MeroLipiKeyboardView: View {
                         }
                         KeyboardToolbarWithTextView(
                             key: "done",
-                            width: proxy.size.width * 0.23,
+                            width: proxy.size.width * 0.17,
                             textIsEmpty: isCurrentTextEmpty
                         ) {
                             // done
                             onDone()
                             playAlphabetClickSound()
-                        }.padding(.leading,16)
+                        }.padding(.leading,10)
                     }
                 }
                 .frame(width:proxy.size.width, height: proxy.size.height)
