@@ -154,7 +154,7 @@ struct MeroLipiKeyboardView: View {
     }
 
     @State private var isEmojiViewPresented = false
-    @State private var selectedEmoji = ""
+    @State private var selectedEmoji: String = ""
 
     var body: some View {
         VStack {
@@ -228,7 +228,12 @@ struct MeroLipiKeyboardView: View {
                                 .emojiPicker(
                                     isPresented: $isEmojiViewPresented,
                                     selectedEmoji: $selectedEmoji,
-                                    arrowDirection: .down
+                                    arrowDirection: .down,
+                                    customHeight: 400.0,
+                                    horizontalInset: .zero,
+                                    isDismissAfterChoosing: false,
+                                    selectedEmojiCategoryTintColor: .systemBlue,
+                                    feedBackGeneratorStyle: .light
                                 )
                                 .onChange(of: selectedEmoji) {
                                     addText(key: selectedEmoji)
