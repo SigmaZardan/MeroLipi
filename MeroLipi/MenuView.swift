@@ -18,8 +18,8 @@ struct MenuView: View {
                 Button("Rate Us") {
                     requestReview()
                 }
-                    NavigationLink("Privacy") {
-                        Text("pro pro ")
+                    NavigationLink("About") {
+                        AboutView()
                     }
                 Spacer()
             }.frame(maxWidth: .infinity)
