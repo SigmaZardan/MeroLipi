@@ -21,6 +21,14 @@ struct TranslatorView: View {
 
     var body: some View {
         VStack {
+            HStack {
+                Spacer()
+                if isFocused {
+                    Button("Done") {
+                        isFocused = false
+                    }
+                }
+            }
             Text("Roman To Nepali")
                 .titleText()
 
