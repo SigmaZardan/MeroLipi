@@ -67,6 +67,7 @@ struct HightlightedInstructionTextView: View {
 struct AcknowledgementView: View {
     var body: some View {
         VStack(alignment: .leading){
+
             HightlightedInstructionTextView(fullText: "Your go-to keyboard for typing in your native language.", textToBold:"native language.")
                 .padding(.vertical)
 
@@ -82,28 +83,15 @@ struct FirstStepInstructionView: View {
             OnboardingStepHeaderView(stepNumber: 1)
 
             InstructionView(
-                instruction: "Tap General",
-                instructionPortionToBold: "General"
-            )
-
-            InstructionView(
-                instruction: "Tap Keyboard",
-                instructionPortionToBold: "Keyboard"
-            )
-
-            InstructionView(
                 instruction: "Tap Keyboards",
                 instructionPortionToBold: "Keyboards"
             )
             InstructionView(
-                instruction: " Tap Add New Keyboard",
-                instructionPortionToBold: "Add New Keyboard"
-            )
-
-            InstructionView(
-                instruction: "Select MeroLipiKeyboard",
+                iconName:"switch.2",
+                instruction: "Turn on MeroLipiKeyboard",
                 instructionPortionToBold: "MeroLipiKeyboard"
             )
+
             AcknowledgementView()
             SetupButton(buttonTitle: "Get Started", onClick: { onStartedClick()})
         }

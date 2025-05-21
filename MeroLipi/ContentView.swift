@@ -130,7 +130,7 @@ struct ContentView: View {
     }
     func openSettings() {
         if let url = URL(
-            string: UIApplication.openNotificationSettingsURLString
+            string: UIApplication.openSettingsURLString
         ) {
             UIApplication.shared.open(url)
         }
