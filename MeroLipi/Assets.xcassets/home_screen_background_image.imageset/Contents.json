@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "home_screen_dark_image.png",
+      "filename" : "home_screen_dark_background.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
