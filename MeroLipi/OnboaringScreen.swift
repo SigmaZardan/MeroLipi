@@ -7,12 +7,36 @@
 
 import SwiftUI
 
-struct OnboaringScreen: View {
+struct OnboardingScreen: View {
+    @State private var selectedTab = 0
+    @Binding var showingOnboardingScreen:Bool
+    @FocusState private var isFieldFocused: Bool
+
+    var indexDisplayMode:PageTabViewStyle.IndexDisplayMode {
+        isFieldFocused ? .never : .automatic
+    }
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView(selection: $selectedTab){
+            FirstStepInstructionView(selectedTab: $selectedTab)
+            .tag(0)
+
+            SecondStepInstructionView(
+                onFinishSetupClicked: {
+                    showingOnboardingScreen = false
+                },
+                isFocused: $isFieldFocused)
+                .tag(1)
+        }
+        .interactiveDismissDisabled()
+        .tabViewStyle(PageTabViewStyle(indexDisplayMode: indexDisplayMode))
+        .onAppear {
+            UIPageControl.appearance().currentPageIndicatorTintColor = .label
+            UIPageControl.appearance().pageIndicatorTintColor = .systemGray
+        }
     }
 }
 
 #Preview {
-    OnboaringScreen()
+    OnboardingScreen(showingOnboardingScreen: .constant(false))
 }

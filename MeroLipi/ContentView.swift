@@ -48,103 +48,29 @@ class PathStore  {
 }
 
 
-enum Screen: Hashable, Codable{
-    case first
-    case second
-    case main
-}
 
 
 struct ContentView: View {
-    @Environment(\.scenePhase) var scenePhase
-    @AppStorage("appTheme") private var isDarkMode = false
-    @AppStorage("KeyboardInstalled") private var isMeroLipiInstalled = false
-    @State private var pathStore = PathStore()
-    
+    @AppStorage("showOnboardingScreenId") private var showingOnboardingScreen = true
     var body: some View {
-        NavigationStack(path: $pathStore.path) {
-            FirstStepInstructionView(onStartedClick: {
-                openSettings()
-            })
-            .frame(maxWidth: .infinity)
-            .background(AppColors.background)
-            .onChange(of: scenePhase) {
-                if scenePhase == .active {
-                    checkForKeyboardExtension()
-                    if isMeroLipiInstalled == true && pathStore.path.isEmpty == true {
-                        pathStore.path.append(Screen.second)
-                    }
-                }
+        MainView()
+            .sheet(isPresented: $showingOnboardingScreen) {
+                OnboardingScreen(
+                    showingOnboardingScreen: $showingOnboardingScreen
+                )
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Skip") {
-                        pathStore.path.append(Screen.main)
-                    }
-                }
-            }
-            .navigationDestination(for: Screen.self) { newScreen in
-                switch newScreen  {
-                    case .first: FirstStepInstructionView(
-                        onStartedClick: { openSettings()
-                        })
-                            .background(AppColors.background)
-                            .onChange(of: scenePhase) {
-                                if scenePhase == .active {
-                                    checkForKeyboardExtension()
-                                    if isMeroLipiInstalled == true {
-                                        pathStore.path.append(Screen.second)
-                                    }
-                                }
-                            }
+        }
+    }
+    
 
-                    case .second: SecondStepInstructionView(
-                        onFinishSetupClicked: {pathStore
-                            .path.append(Screen.main)})
-                    .background(AppColors.background)
-                        
-                    case .main: MainView(isDarkMode: $isDarkMode) {
-                        if isMeroLipiInstalled == true {
-                            // navigate to the second screen
-                            pathStore.path.append(Screen.second)
-                        } else {
-                            pathStore.path.append(Screen.first)
-                        }
-                    }
-                    .navigationBarBackButtonHidden(true)
-                }
-            } .preferredColorScheme(isDarkMode ? .dark : .light)
-        }
-    }
-    
-    
-    func checkForKeyboardExtension() {
-        if let keyboards = UserDefaults.standard.array(forKey: "AppleKeyboards") as? [String] {
-            if keyboards
-                .firstIndex(of: "bibek.MeroLipi.MeroLipiKeyboard") != nil {
-                isMeroLipiInstalled = true
-            } else  {
-                isMeroLipiInstalled = false
-            }
-        }
-    }
-    func openSettings() {
-        if let url = URL(
-            string: UIApplication.openSettingsURLString
-        ) {
-            UIApplication.shared.open(url)
-        }
-    }
-}
+
 
 struct MainView: View {
-    @Binding var isDarkMode: Bool
-    let onAddMeroLipiClicked: () -> Void
-    
+
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                HomeView(onAddMeroLipiClicked: onAddMeroLipiClicked)
+                HomeView()
                     .background(AppColors.background)
             }
             
@@ -159,8 +85,8 @@ struct MainView: View {
             }
             
             Tab("Menu", systemImage: "list.bullet") {
-                MenuView(isDarkMode:$isDarkMode )
-                    
+                MenuView()
+
             }
             
         }.tint(AppColors.titleAndButtonColor)
@@ -169,7 +95,7 @@ struct MainView: View {
 
 
 #Preview {
-    MainView(isDarkMode: .constant(false), onAddMeroLipiClicked: {})
+    MainView()
 }
 
 #Preview {

@@ -63,7 +63,6 @@ struct TitleAndButtonComponentView: View {
 }
 
 struct HomeView: View {
-    let onAddMeroLipiClicked: () -> Void
     var body: some View {
             ScrollView {
                     WelcomeTextAndImageView()
@@ -76,7 +75,6 @@ struct HomeView: View {
                             // if the keyboard extension has already been installed then
                             // go to the second page
                             // otherwise go to the first page
-                            onAddMeroLipiClicked()
                         }
                         InstructionView(
                             instruction: "Tap on Translation tab for Roman To Nepali",
@@ -89,5 +87,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(onAddMeroLipiClicked: {})
+    HomeView()
 }
