@@ -136,6 +136,7 @@ struct MeroLipiKeyboardView: View {
     @State private var currentText:String = ""
     @State private var isShowingNumericalLayout = false
     @State private var isShowingSecondaryLayout = false
+    @State private var timer: Timer?
 
 
     var isCurrentTextEmpty: Bool {
@@ -192,6 +193,24 @@ struct MeroLipiKeyboardView: View {
                             ) {
                                 removeText()
                             }
+                            .onLongPressGesture(
+                                               minimumDuration: 0.1,
+                                               pressing: { isPressing in
+                                                   if isPressing {
+                                                       // Start a new timer only if one isn't already running
+                                                       if timer == nil {
+                                                           timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+                                                               removeText()
+                                                           }
+                                                       }
+                                                   } else {
+                                                       // Stop the timer when the user releases the button
+                                                       timer?.invalidate()
+                                                       timer = nil // Reset the timer variable
+                                                   }
+                                               },
+                                               perform: {} // Empty, as the action is handled by the timer
+                                           )
                         }
 
                     HStack {
@@ -290,8 +309,8 @@ struct MeroLipiKeyboardView: View {
 
     func removeText() {
         deleteText()
-        playDeleteSound()
         guard currentText.count > 0 else { return }
+        playDeleteSound()
         currentText.removeLast()
     }
 }
