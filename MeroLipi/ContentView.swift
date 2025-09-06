@@ -95,9 +95,5 @@ struct MainView: View {
 
 
 #Preview {
-    MainView()
-}
-
-#Preview {
     ContentView()
 }

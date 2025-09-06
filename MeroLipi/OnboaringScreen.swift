@@ -30,6 +30,7 @@ struct OnboardingScreen: View {
         }
         .interactiveDismissDisabled()
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: indexDisplayMode))
+        .ignoresSafeArea(edges: .bottom)
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = .label
             UIPageControl.appearance().pageIndicatorTintColor = .systemGray
