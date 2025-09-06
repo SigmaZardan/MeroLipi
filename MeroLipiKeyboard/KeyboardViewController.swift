@@ -8,8 +8,11 @@
 import UIKit
 import SwiftUI
 
+
 class KeyboardViewController: UIInputViewController {
+    private var keyboardHeightConstraint: NSLayoutConstraint?
     @State private var isEmpty = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,11 +33,17 @@ class KeyboardViewController: UIInputViewController {
                 },
                 needsInputModeSwitchKey: self.needsInputModeSwitchKey,
                 nextKeyboardAction: #selector(self.handleInputModeList(from:with:)),
-                keyboardHeight: 275,
+                keyboardHeight: 232,
                 onDone: { [weak self] in
                     guard let self else {return}
                     self.textDocumentProxy.insertText("\n")
                 },
+                setKeyboardHeight:  {
+                    [weak self] newHeight in
+                                        guard let self = self else { return }
+                                        // Animate the height change
+                                        self.animateKeyboardHeight(to: newHeight)
+                }
             ))
 
         // default to white
@@ -49,13 +58,23 @@ class KeyboardViewController: UIInputViewController {
         self.view.addSubview(meroLipiKeyboardView)
         meroLipiKeyboardViewController.didMove(toParent: self)
 
+        let heightConstraint = meroLipiKeyboardView.heightAnchor.constraint(
+            equalToConstant: 232)
+                self.keyboardHeightConstraint = heightConstraint
+
         NSLayoutConstraint.activate([
             meroLipiKeyboardView.leftAnchor.constraint(equalTo: view.leftAnchor),
             meroLipiKeyboardView.topAnchor.constraint(equalTo: view.topAnchor),
             meroLipiKeyboardView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            meroLipiKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            meroLipiKeyboardView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            heightConstraint
         ])
 
     }
+
+    private func animateKeyboardHeight(to newHeight: CGFloat) {
+               self.keyboardHeightConstraint?.constant = newHeight
+               self.view.layoutIfNeeded()
+       }
 
 }

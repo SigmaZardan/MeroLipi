@@ -8,6 +8,7 @@
 import SwiftUI
 import MCEmojiPicker
 
+
 struct CharacterKeyView: View {
     let key: String
     let width: CGFloat
@@ -137,6 +138,7 @@ struct MeroLipiKeyboardView: View {
     @State private var isShowingNumericalLayout = false
     @State private var isShowingSecondaryLayout = false
     @State private var timer: Timer?
+    var setKeyboardHeight:  (CGFloat) -> Void
 
 
     var isCurrentTextEmpty: Bool {
@@ -160,7 +162,7 @@ struct MeroLipiKeyboardView: View {
     var body: some View {
         VStack {
             GeometryReader { proxy in
-                VStack {
+                    VStack {
                         ForEach(keyboardLayout.rows, id: \.self) { row in
                             HStack{
                                 ForEach(row, id: \.self) { key in
@@ -194,52 +196,52 @@ struct MeroLipiKeyboardView: View {
                                 removeText()
                             }
                             .onLongPressGesture(
-                                               minimumDuration: 0.1,
-                                               pressing: { isPressing in
-                                                   if isPressing {
-                                                       // Start a new timer only if one isn't already running
-                                                       if timer == nil {
-                                                           timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
-                                                               removeText()
-                                                           }
-                                                       }
-                                                   } else {
-                                                       // Stop the timer when the user releases the button
-                                                       timer?.invalidate()
-                                                       timer = nil // Reset the timer variable
-                                                   }
-                                               },
-                                               perform: {} // Empty, as the action is handled by the timer
-                                           )
-                        }
-
-                    HStack {
-                        KeyboardToolbarWithImageView(
-                            imageName: isShowingSecondaryLayout ? "arrowshape.up.fill": "arrowshape.up",
-                            width: proxy.size.width * 0.10,
-                            onClick:  {
-                                playAlphabetClickSound()
-                                isShowingSecondaryLayout.toggle()
-                            }
-                        )
-                        KeyboardToolbarWithTextView(
-                            key: isShowingNumericalLayout ? "कख" : "१२३",
-                            width: proxy.size.width * 0.10
-                        ) {
-                            // change the layout and show numbers in nepali
-                            // along with other remaining letters as well
-                            isShowingNumericalLayout.toggle()
-                            playAlphabetClickSound()
-                        }
-
-                        if needsInputModeSwitchKey && nextKeyboardAction != nil {
-                            SelectKeyboardToolbarButtonView(
-                                action: nextKeyboardAction!,
-                                imageName: "globe",
-                                width: proxy.size.width * 0.10
+                                minimumDuration: 0.1,
+                                pressing: { isPressing in
+                                    if isPressing {
+                                        // Start a new timer only if one isn't already running
+                                        if timer == nil {
+                                            timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+                                                removeText()
+                                            }
+                                        }
+                                    } else {
+                                        // Stop the timer when the user releases the button
+                                        timer?.invalidate()
+                                        timer = nil // Reset the timer variable
+                                    }
+                                },
+                                perform: {} // Empty, as the action is handled by the timer
                             )
-                        } else {
-                            // show default emoji view
+                        }
+
+                        HStack {
+                            KeyboardToolbarWithImageView(
+                                imageName: isShowingSecondaryLayout ? "arrowshape.up.fill": "arrowshape.up",
+                                width: proxy.size.width * 0.10,
+                                onClick:  {
+                                    playAlphabetClickSound()
+                                    isShowingSecondaryLayout.toggle()
+                                }
+                            )
+                            KeyboardToolbarWithTextView(
+                                key: isShowingNumericalLayout ? "कख" : "१२३",
+                                width: proxy.size.width * 0.10
+                            ) {
+                                // change the layout and show numbers in nepali
+                                // along with other remaining letters as well
+                                isShowingNumericalLayout.toggle()
+                                playAlphabetClickSound()
+                            }
+
+                            if needsInputModeSwitchKey && nextKeyboardAction != nil {
+                                SelectKeyboardToolbarButtonView(
+                                    action: nextKeyboardAction!,
+                                    imageName: "globe",
+                                    width: proxy.size.width * 0.10
+                                )
+                            } else {
+                                // show default emoji view
                                 KeyboardToolbarWithImageView(imageName: "face.smiling", width: proxy.size.width * 0.10) {
                                     playAlphabetClickSound()
                                     isEmojiViewPresented.toggle()
@@ -254,29 +256,43 @@ struct MeroLipiKeyboardView: View {
                                     selectedEmojiCategoryTintColor: .systemBlue,
                                     feedBackGeneratorStyle: .light
                                 )
-                                .onChange(of: selectedEmoji) {
-                                    addText(key: selectedEmoji)
-                                }
-                        }
-                        KeyboardToolbarWithTextView(key: "space",width: proxy.size.width * 0.38) {
-                            addText(key: " ")
-                        }
-                        CharacterKeyView(key: "।", width: proxy.size.width * 0.08) {
-                            addText(key:"।")
-                        }
-                        KeyboardToolbarWithTextView(
-                            key: "done",
-                            width: proxy.size.width * 0.17,
-                            textIsEmpty: isCurrentTextEmpty
-                        ) {
-                            // done
-                            onDone()
-                            playAlphabetClickSound()
-                        }.padding(.leading,10)
-                    }
-                }
-                .frame(width:proxy.size.width, height: proxy.size.height)
+                                .onChange(of: selectedEmoji) { oldValue, newValue in
+                                    if !newValue.isEmpty {
+                                        addText(key: newValue)
+                                    }
 
+                                    DispatchQueue.main.async {
+                                                          self.selectedEmoji = ""
+                                                      }
+                                }
+                                .onChange(of: isEmojiViewPresented) {
+                                    DispatchQueue.main.async {
+                                        if isEmojiViewPresented {
+                                            setKeyboardHeight(350)
+                                        } else {
+                                            setKeyboardHeight(keyboardHeight)
+                                        }
+                                    }
+                                }
+                            }
+                            KeyboardToolbarWithTextView(key: "space",width: proxy.size.width * 0.38) {
+                                addText(key: " ")
+                            }
+                            CharacterKeyView(key: "।", width: proxy.size.width * 0.08) {
+                                addText(key:"।")
+                            }
+                            KeyboardToolbarWithTextView(
+                                key: "done",
+                                width: proxy.size.width * 0.17,
+                                textIsEmpty: isCurrentTextEmpty
+                            ) {
+                                // done
+                                onDone()
+                                playAlphabetClickSound()
+                            }.padding(.leading,10)
+                        }
+                    }
+                    .frame(width:proxy.size.width, height: proxy.size.height)
             }
             .padding(23)
         }
@@ -351,5 +367,6 @@ struct SelectKeyboardToolbarButtonView: UIViewRepresentable {
         deleteText: {},
         keyboardHeight: 215,
         onDone: {},
+        setKeyboardHeight:  {_ in}
     )
 }
