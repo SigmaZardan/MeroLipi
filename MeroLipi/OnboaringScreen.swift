@@ -28,9 +28,9 @@ struct OnboardingScreen: View {
                 isFocused: $isFieldFocused)
                 .tag(1)
         }
+        .background(AppColors.background)
         .interactiveDismissDisabled()
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: indexDisplayMode))
-        .ignoresSafeArea(edges: .bottom)
         .onAppear {
             UIPageControl.appearance().currentPageIndicatorTintColor = .label
             UIPageControl.appearance().pageIndicatorTintColor = .systemGray

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct FirstStepInstructionView: View {
     @Binding var selectedTab: Int
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         ZStack {
             AppColors.background.ignoresSafeArea()
@@ -29,9 +31,13 @@ struct FirstStepInstructionView: View {
                 }
             }
         }
-        .onAppear {
-            if isMeroLipiInstalled() {
-                selectedTab = 1
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                if isMeroLipiInstalled() {
+                    withAnimation {
+                        selectedTab = 1
+                    }
+                }
             }
         }
 

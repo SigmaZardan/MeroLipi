@@ -20,6 +20,7 @@ struct SecondStepInstructionView: View {
                 ScrollView {
                     VStack {
                         OnboardingStepHeaderView(stepNumber: 2)
+                        Spacer()
 
                         InstructionView(iconName: "globe", instruction: "Tap and hold Globe icon", instructionPortionToBold: "Globe")
                         InstructionView(instruction: "Tap MeroLipiKeyboard to switch keyboards", instructionPortionToBold: "MeroLipiKeyboard")
