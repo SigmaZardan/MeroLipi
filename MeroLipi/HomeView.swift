@@ -25,21 +25,15 @@ extension View {
 
 
 
-struct WelcomeTextAndImageView: View {
+struct WelcomeImageView: View {
     @Environment(\.colorScheme) var colorScheme
-    var imageName: String {
-        colorScheme == .dark ? "home_screen_dark_image" : "home_screen_light_image"
-    }
+    
     var body: some View {
-        VStack {
-            Text("Welcome To Merolipi")
-                .titleText()
-
-            Image(decorative: imageName)
+            Image(decorative: "home_screen_light_image")
                 .resizable()
                 .scaledToFit()
-
-        }
+                .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
+                .padding()
     }
 }
 
@@ -63,9 +57,18 @@ struct TitleAndButtonComponentView: View {
 }
 
 struct HomeView: View {
+
+    init() {
+        UINavigationBar
+            .appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
+    }
+
     var body: some View {
-            ScrollView {
-                    WelcomeTextAndImageView()
+        NavigationStack {
+            ZStack {
+                AppColors.background.ignoresSafeArea()
+                ScrollView {
+                    WelcomeImageView()
                     VStack {
                         TitleAndButtonComponentView(
                             title: "Add Mero Lipi keyboard?",
@@ -82,10 +85,13 @@ struct HomeView: View {
                         )
                     }
 
+                }
             }
+            .navigationTitle("Home View")
+        }
     }
 }
 
 #Preview {
-    HomeView()
+        HomeView()
 }

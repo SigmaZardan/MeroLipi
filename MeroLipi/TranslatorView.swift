@@ -10,6 +10,30 @@ import GoogleGenerativeAI
 import SwiftData
 
 
+enum ButtonType {
+    case save, copy
+
+
+    var buttonLabel: String {
+        switch self {
+            case .save:
+                "Save"
+            case .copy:
+                "Copy"
+        }
+    }
+
+
+    var systemImageName:String {
+        switch self {
+            case .save:
+                "square.and.arrow.down.on.square"
+            case .copy:
+                "document.on.document"
+        }
+    }
+}
+
 
 struct TranslatorView: View {
     @State private var viewModel = ViewModel(
@@ -20,109 +44,151 @@ struct TranslatorView: View {
     let errorMessage = "Oops! something went wrong.☹️"
 
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
+        NavigationStack{
+            VStack {
+                ZStack{
+                    ScrollView{
+                        if !viewModel.response.isEmpty {
+                            VStack(alignment: .leading){
+                                Text(viewModel.response)
+                                    .font(.title2)
+                                    .padding()
+
+                                if viewModel.response != AIModelData.defaultResponse {
+                                    ResponseButtonsView(viewModel: viewModel)
+                                }
+                            }
+                            .frame(
+                                maxWidth: .infinity
+                            )
+                            .background(Color.indigo.opacity(0.2))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .contextMenu {
+                                ContextMenuButtonsView(
+                                    viewModel: viewModel
+                                )
+                            }
+                            .padding()
+                        }
+                    }
+
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .indigo))
+                            .scaleEffect(4)
+                    }
+                }
+
+                VStack {
+                    HStack{
+                        TextField(
+                            "Try typing in Roman",
+                            text: $viewModel.userPrompt,
+                            axis: .vertical
+                        )
+                        .lineLimit(2)
+                        .font(.title3)
+                        .padding()
+                        .background(Color.indigo.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                        .disableAutocorrection(true)
+                        .focused($isFocused)
+
+
+                        Button {
+                            viewModel.generateResponse()
+                            isFocused = false
+                        } label: {
+                            Image(systemName: "arrowshape.up.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxWidth: 40)
+                                .tint(
+                                    viewModel.userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
+                                )
+                        }
+                        .disabled(
+                            viewModel.userPrompt
+                                .trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                ).isEmpty
+                        )
+                    }
+                    .padding()
+                }
+            }
+            .background(AppColors.background)
+            .navigationTitle("Roman To Nepali")
+            .alert(
+                "Copied!",
+                isPresented: $viewModel.isCopyAlertPresented,
+                actions: { Button("Ok") { }
+                })
+            .alert(errorMessage,
+                   isPresented:  $viewModel.isError,
+                   actions: {
+                Button("Retry", action: viewModel.handleRetry)
+                Button("Ok") {
+                    viewModel.resetLoading()
+                    viewModel.resetPrompt()
+                }
+            }
+            )
+            .alert("Saved!", isPresented: $viewModel.isSaved,
+                   actions: {
+                Button("Ok") { viewModel.isSaved = true }
+            }
+            )
+            .toolbar {
                 if isFocused {
                     Button("Done") {
                         isFocused = false
                     }
                 }
             }
-            Text("Roman To Nepali")
-                .titleText()
-
-
-            ZStack{
-                ScrollView{
-                    Text(viewModel.response)
-                        .font(.title2)
-                        .padding()
-                        .contextMenu {
-                            Button {
-                                viewModel.copyToClipBoard()
-                            }label: {
-                                Label("Copy", systemImage: "document.on.document")
-                            }
-
-                            Button {
-                                viewModel.saveResponse()
-                            } label: {
-                                Label("Save", systemImage: "document.on.document")
-                            }
-                        }
-                }
-
-                if viewModel.isLoading {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .indigo))
-                        .scaleEffect(4)
-                }
-            }
-
-            VStack {
-                if viewModel.response.isEmpty == false {
-                    Button {
-                        viewModel.copyToClipBoard()
-                    } label: {
-                        Image(systemName: "document.on.document")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 40)
-                    }
-                    .padding()
-                }
-
-
-                HStack{
-                    TextField(
-                        "Try typing in Roman",
-                        text: $viewModel.userPrompt,
-                        axis: .vertical
-                    )
-                    .lineLimit(2)
-                    .font(.title3)
-                    .padding()
-                    .background(Color.indigo.opacity(0.2), in: Capsule())
-                    .disableAutocorrection(true)
-                    .onSubmit {
-                        viewModel.generateResponse()
-                    }
-                    .focused($isFocused)
-
-                    Button {
-                        viewModel.generateResponse()
-                        isFocused = false
-                    } label: {
-
-                        Image(systemName: "arrowshape.up.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 40)
-                            .disabled(viewModel.userPrompt.isEmpty)
-                            .tint(
-                                viewModel.userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
-                            )
-                    }
-                }
-            }
         }
-        .alert(
-            "Copied!",
-            isPresented: $viewModel.isCopyAlertPresented,
-            actions: { Button("Ok") { }
-            })
-        .alert(errorMessage,
-               isPresented:  $viewModel.isError,
-               actions: {
-            Button("Retry", action: viewModel.handleRetry)
-            Button("Ok") {
-                viewModel.resetLoading()
-                viewModel.resetPrompt()
-            }
+    }
+}
+
+
+struct ContextMenuButtonsView: View {
+    let viewModel: TranslatorView.ViewModel
+    var body: some View {
+        VStack {
+            ButtonView( onButtonClick: { viewModel.saveResponse() },buttonType: .save)
+            ButtonView(onButtonClick: { viewModel.copyToClipBoard() },buttonType: .copy)
         }
-        )
-        .padding()
+        .labelStyle(.titleAndIcon)
+    }
+}
+
+
+struct ResponseButtonsView: View {
+    let viewModel: TranslatorView.ViewModel
+    var body: some View {
+        HStack {
+            ButtonView( onButtonClick: { viewModel.saveResponse() },buttonType: .save)
+            ButtonView(onButtonClick: { viewModel.copyToClipBoard() },buttonType: .copy)
+            Spacer()
+        }
+        .labelStyle(.iconOnly)
+        .padding([.horizontal, .bottom])
+    }
+}
+
+
+
+
+struct ButtonView: View {
+    let onButtonClick: () -> Void
+    let buttonType: ButtonType
+
+    var body: some View {
+        Button {
+            onButtonClick()
+        } label: {
+            Label(buttonType.buttonLabel, systemImage: buttonType.systemImageName)
+        }
     }
 }
 

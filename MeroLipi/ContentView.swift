@@ -71,12 +71,10 @@ struct MainView: View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
                 HomeView()
-                    .background(AppColors.background)
             }
             
             Tab("Translate", systemImage: "character.book.closed") {
                 TranslatorView()
-                    .background(AppColors.background)
             }
             
             Tab("Saved", systemImage: "doc.text.fill") {

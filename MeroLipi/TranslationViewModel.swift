@@ -11,8 +11,9 @@ import UIKit
 import SwiftData
 
 class AIModelData {
-    static let name = "gemini-2.5-flash-preview-04-17"
+    static let name = "gemini-2.5-flash-lite-preview-06-17"
     static let apiKey = APIKey.default
+    static let defaultResponse = "Invalid input"
     static let systemInstruction = """
         You are an AI linguistic model functioning exclusively as a highly accurate Roman Nepali to Devanagari Nepali translator. Your SOLE purpose is to convert input text written in Roman Nepali (Nepali language using the English alphabet, reflecting common, everyday usage) into its equivalent standard Devanagari Nepali script.
         
@@ -52,6 +53,7 @@ extension TranslatorView {
         var isCopyAlertPresented = false
         private(set) var isLoading = false
          var isError = false
+        var isSaved = false
         private let dataSource: SwiftDataService
 
 
@@ -106,6 +108,7 @@ extension TranslatorView {
         func saveResponse() {
             let response = AIResponse(response: response)
             dataSource.addResponse(response)
+            isSaved = true
         }
     }
 }
