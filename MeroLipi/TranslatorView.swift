@@ -86,7 +86,7 @@ struct TranslatorView: View {
                             text: $viewModel.userPrompt,
                             axis: .vertical
                         )
-                        .lineLimit(2)
+                        .lineLimit(4)
                         .font(.title3)
                         .padding()
                         .background(Color.indigo.opacity(0.2))

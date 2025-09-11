@@ -13,39 +13,48 @@ struct ResponseView: View {
     )
 
     var body: some View {
-        ZStack {
-            AppColors.background.ignoresSafeArea()
-            VStack {
-                Text("Saved Translations")
-                    .titleText()
-
-                if viewModel.responses.isEmpty {
-                    ContentUnavailableView {
-                        Label("No Translations", systemImage: "document.fill")
-                    } description: {
-                        Text("The translations you save will appear here.")
-                    }
-                } else {
-                    List {
-                        ForEach(viewModel.responses) { data in
-                            Text(data.response)
-                                .listRowBackground(Color.clear)
-                                .textSelection(.enabled)
-                                .contextMenu {
-                                    Button {
-                                        viewModel.copyToClipBoard(data.response)
-                                    }label: {
-                                        Label("Copy", systemImage: "document.on.document")
-                                    }
-                                }
+        NavigationStack {
+            ZStack {
+                AppColors.background.ignoresSafeArea()
+                VStack {
+                    if viewModel.responses.isEmpty {
+                        ContentUnavailableView {
+                            Label("No Translations", systemImage: "document.fill")
+                        } description: {
+                            Text("The translations you save will appear here.")
                         }
-                        .onDelete(perform: viewModel.deleteResponse)
+                    } else {
+                        List {
+                            ForEach(viewModel.responses) { data in
+                                NavigationLink(value: data) {
+                                    Text(data.response)
+                                        .listRowBackground(Color.clear)
+                                        .textSelection(.enabled)
+                                        .contextMenu {
+                                            Button {
+                                                viewModel.copyToClipBoard(data.response)
+                                            }label: {
+                                                Label("Copy", systemImage: "document.on.document")
+                                            }
+                                        }
+                                }
+                                .listRowBackground(
+                                    AppColors.cardBackgroundColor
+                                )
 
-                    }.scrollContentBackground(.hidden)
+                            }
+                            .onDelete(perform: viewModel.deleteResponse)
+
+
+                        }.scrollContentBackground(.hidden)
+                            .navigationDestination(for:AIResponse.self) { response in
+                                EditResponseView(response:response)
+                            }
+                    }
                 }
+            }.onAppear {
+                viewModel.fetchResponses()
             }
-        }.onAppear {
-            viewModel.fetchResponses()
         }
     }
 }
