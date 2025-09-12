@@ -55,6 +55,7 @@ struct ResponseView: View {
             }.onAppear {
                 viewModel.fetchResponses()
             }
+            .navigationTitle("Saved Translations")
         }
     }
 }

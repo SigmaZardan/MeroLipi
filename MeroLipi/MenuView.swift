@@ -46,6 +46,7 @@ struct MenuView: View {
             }
             .scrollContentBackground(.hidden)
             .background(AppColors.background)
+            .navigationTitle("Privacy & Settings")
         }
     }
 }
