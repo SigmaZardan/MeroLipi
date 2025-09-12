@@ -27,12 +27,15 @@ extension View {
 
 struct WelcomeImageView: View {
     @Environment(\.colorScheme) var colorScheme
-    
+    let height: CGFloat
+
     var body: some View {
             Image(decorative: "home_screen_light_image")
                 .resizable()
                 .scaledToFit()
+                .frame( maxHeight: height)
                 .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
+                .padding()
                 .padding()
     }
 }
@@ -65,29 +68,32 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                AppColors.background.ignoresSafeArea()
-                ScrollView {
-                    WelcomeImageView()
-                    VStack {
-                        TitleAndButtonComponentView(
-                            title: "Add Mero Lipi keyboard?",
-                            buttonLabel: "Settings",
-                        ) {
-                            // navigate to the first screen
-                            // if the keyboard extension has already been installed then
-                            // go to the second page
-                            // otherwise go to the first page
+            GeometryReader { proxy in
+                ZStack {
+                    AppColors.background.ignoresSafeArea()
+                    ScrollView {
+                        WelcomeImageView(height: proxy.size.height * 0.4)
+                        VStack {
+                            TitleAndButtonComponentView(
+                                title: "Add Mero Lipi keyboard?",
+                                buttonLabel: "Settings",
+                            ) {
+                                // navigate to the first screen
+                                // if the keyboard extension has already been installed then
+                                // go to the second page
+                                // otherwise go to the first page
+                            }
+                            InstructionView(
+                                instruction: "Tap on Translation tab for Roman To Nepali",
+                                instructionPortionToBold: "Roman To Nepali"
+                            )
                         }
-                        InstructionView(
-                            instruction: "Tap on Translation tab for Roman To Nepali",
-                            instructionPortionToBold: "Roman To Nepali"
-                        )
-                    }
 
+                    }
                 }
+                .navigationTitle("Home View")
             }
-            .navigationTitle("Home View")
+
         }
     }
 }
