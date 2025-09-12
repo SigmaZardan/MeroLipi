@@ -79,21 +79,19 @@ struct TranslatorView: View {
                     }
                 }
 
-                VStack {
                     HStack{
                         TextField(
                             "Try typing in Roman",
                             text: $viewModel.userPrompt,
                             axis: .vertical
                         )
-                        .lineLimit(4)
-                        .font(.title3)
+                        .lineLimit(1...4)
                         .padding()
                         .background(Color.indigo.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 25))
                         .disableAutocorrection(true)
                         .focused($isFocused)
-                        
+
 
                         Button {
                             viewModel.generateResponse()
@@ -102,7 +100,7 @@ struct TranslatorView: View {
                             Image(systemName: "arrowshape.up.circle")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(maxWidth: 40)
+                                .frame(width: 40, height: 40)
                                 .tint(
                                     viewModel.userPrompt.isEmpty ? nil : AppColors.titleAndButtonColor
                                 )
@@ -116,7 +114,6 @@ struct TranslatorView: View {
                     }
                     .padding()
                 }
-            }
             .background(AppColors.background)
             .navigationTitle("Roman To Nepali")
             .alert(
@@ -146,9 +143,9 @@ struct TranslatorView: View {
                     }
                 }
             }
+            }
         }
     }
-}
 
 
 struct ContextMenuButtonsView: View {
