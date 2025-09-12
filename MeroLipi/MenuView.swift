@@ -12,17 +12,41 @@ struct MenuView: View {
     @Environment(\.requestReview) var requestReview
 
     var body: some View {
-            VStack(alignment:.leading, spacing: 8){
-                Button("Rate Us") {
-                    requestReview()
-                }
-                    NavigationLink("About") {
-                        AboutView()
+        NavigationStack {
+            List {
+                Section("App Info") {
+                    Button{
+                    } label: {
+                        Label("Rate Us", systemImage: "star.fill")
                     }
-                Spacer()
-            }.frame(maxWidth: .infinity)
-                .padding()
-                .background(AppColors.background)
+                    .listRowBackground(AppColors.cardBackgroundColor)
+
+                    NavigationLink(destination: AboutView()) {
+                        Label("About", systemImage: "info.circle.fill")
+                    }
+                    .listRowBackground(AppColors.cardBackgroundColor)
+                }
+
+                Section("App Support"){
+
+                    NavigationLink(destination: HowToUseView()) {
+                        Label("How to Use", systemImage: "keyboard.fill")
+                    }
+                    .listRowBackground(
+                        AppColors.cardBackgroundColor
+                    )
+
+                    NavigationLink(destination: ContactView()) {
+                        Label("Contact Us", systemImage: "envelope.fill")
+                    }
+                    .listRowBackground(
+                        AppColors.cardBackgroundColor
+                    )
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(AppColors.background)
+        }
     }
 }
 

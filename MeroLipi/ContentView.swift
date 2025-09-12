@@ -79,12 +79,10 @@ struct MainView: View {
             
             Tab("Saved", systemImage: "doc.text.fill") {
                 ResponseView()
-                    .background(AppColors.background)
             }
             
             Tab("Menu", systemImage: "list.bullet") {
                 MenuView()
-
             }
             
         }.tint(AppColors.titleAndButtonColor)

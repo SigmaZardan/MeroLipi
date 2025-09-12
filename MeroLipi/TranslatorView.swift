@@ -93,7 +93,7 @@ struct TranslatorView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 25))
                         .disableAutocorrection(true)
                         .focused($isFocused)
-
+                        
 
                         Button {
                             viewModel.generateResponse()
