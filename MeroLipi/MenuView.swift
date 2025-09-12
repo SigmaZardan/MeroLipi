@@ -16,6 +16,7 @@ struct MenuView: View {
             List {
                 Section("App Info") {
                     Button{
+                        requestReview()
                     } label: {
                         Label("Rate Us", systemImage: "star.fill")
                     }
