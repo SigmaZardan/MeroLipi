@@ -11,7 +11,6 @@ import SwiftUI
 
 class KeyboardViewController: UIInputViewController {
     private var keyboardHeightConstraint: NSLayoutConstraint?
-    @State private var isEmpty = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +20,6 @@ class KeyboardViewController: UIInputViewController {
                 insertText: { [weak self] text in
                     guard let self else { return }
                     self.textDocumentProxy.insertText(text)
-                    if text.isEmpty == true {
-                        isEmpty = true
-                    }
                 },
                 deleteText: { [weak self] in
                     guard let self,
@@ -33,7 +29,7 @@ class KeyboardViewController: UIInputViewController {
                 },
                 needsInputModeSwitchKey: self.needsInputModeSwitchKey,
                 nextKeyboardAction: #selector(self.handleInputModeList(from:with:)),
-                keyboardHeight: 232,
+                keyboardHeight: 265,
                 onDone: { [weak self] in
                     guard let self else {return}
                     self.textDocumentProxy.insertText("\n")
@@ -59,7 +55,7 @@ class KeyboardViewController: UIInputViewController {
         meroLipiKeyboardViewController.didMove(toParent: self)
 
         let heightConstraint = meroLipiKeyboardView.heightAnchor.constraint(
-            equalToConstant: 232)
+            equalToConstant: 265)
                 self.keyboardHeightConstraint = heightConstraint
 
         NSLayoutConstraint.activate([

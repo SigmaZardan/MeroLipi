@@ -34,21 +34,26 @@ struct CharacterKeyView: View {
             } label: {
                 Text(key)
                     .font(.system(size: 18))
-                    .frame(width: width, height:35)
+                    .frame(width: width, height:45)
                     .tint(AppColors.keyColor)
                     .background(AppColors.keyBackgroundColor)
                     .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .strokeBorder(Color.black.opacity(0.4), lineWidth: 1),
+                        alignment: .bottom
+                    )
             }
-        }.frame(width: width, height: 35)
+        }.frame(width: width, height: 45)
     }
 
     func showTappedAnimation() {
-        withAnimation(.easeIn(duration: 0.05)) {
+        withAnimation(.easeIn(duration: 0.01)) {
             showMagnified = true
         }
 
         // Hide with animation after delay
-        withAnimation(.easeOut(duration: 0.1).delay(0.14)) {
+        withAnimation(.easeOut(duration: 0.09).delay(0.09)) {
             showMagnified = false
         }
     }
@@ -77,12 +82,18 @@ struct KeyboardToolbarWithImageView: View {
         } label: {
             Image(systemName:imageName)
                 .font(.system(size: 18))
-                .frame(width: width,height:35)
+                .frame(width: width,height:45)
                 .keyboardToolbarStyle()
                 .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.black.opacity(0.4), lineWidth: 1),
+                    alignment: .bottom
+                )
                 .padding(.leading, 8)
         }
     }
+
 }
 
 
@@ -118,10 +129,15 @@ struct KeyboardToolbarWithTextView: View {
         } label: {
             Text(key)
                 .font(.system(size: 18))
-                .frame(width: width, height:35)
+                .frame(width: width, height:45)
                 .tint(keyColor)
                 .background(backgroundColor)
                 .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .strokeBorder(Color.black.opacity(0.4), lineWidth: 0.6),
+                    alignment: .bottom
+                )
         }
         .disabled(makeButtonDisabled)
     }
@@ -171,7 +187,7 @@ struct MeroLipiKeyboardView: View {
                                                      width: proxy.size.width * 0.08) {
                                         addText(key: key)
 
-                                    }
+                                    }.padding(.bottom, 1)
                                 }
                             }
                         }
