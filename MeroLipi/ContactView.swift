@@ -19,6 +19,10 @@ struct ContactView: View {
                     .font(.headline)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
+                Text("Send email to bibekbhujel077@gmail.com")
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
 
                 Button {
                     sendEmail()
