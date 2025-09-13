@@ -78,10 +78,7 @@ struct HomeView: View {
                                 title: "Add Mero Lipi keyboard?",
                                 buttonLabel: "Settings",
                             ) {
-                                // navigate to the first screen
-                                // if the keyboard extension has already been installed then
-                                // go to the second page
-                                // otherwise go to the first page
+                                openSettings()
                             }
                             InstructionView(
                                 instruction: "Tap on Translation tab for Roman To Nepali",
@@ -95,6 +92,14 @@ struct HomeView: View {
             }
 
         }
+    }
+
+    func openSettings() {
+            if let url = URL(
+                string: UIApplication.openSettingsURLString
+            ) {
+                UIApplication.shared.open(url)
+            }
     }
 }
 
