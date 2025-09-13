@@ -65,7 +65,7 @@ While typing, tap the 🌐 (globe) icon on your keyboard and select **Nepali Key
                     }
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.systemGray6))
+                    .background(AppColors.cardBackgroundColor)
                     .cornerRadius(12)
                 }
 
