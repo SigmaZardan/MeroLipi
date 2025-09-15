@@ -16,21 +16,22 @@ struct CharacterKeyView: View {
 
     @State private var showMagnified = false
 
+
+
     var body: some View {
         ZStack{
             if showMagnified {
-                Text(key)
-                    .font(.system(size: 30))
-                    .frame(width: width, height:50)
-                    .tint(AppColors.keyColor)
-                    .background(AppColors.keyBackgroundColor)
-                    .cornerRadius(8)
-                    .offset(y: -40)
-                    .transition(.scale.combined(with: .opacity))
+                    Text(key)
+                        .font(.system(size: 30))
+                        .frame(width: width + 10, height:55)
+                        .tint(AppColors.keyColor)
+                        .background(AppColors.keyBackgroundColor)
+                        .cornerRadius(8)
+                        .offset(y: -50)
+                        .transition(.scale.combined(with: .opacity))
             }
             Button {
                 onClick()
-                showTappedAnimation()
             } label: {
                 Text(key)
                     .font(.system(size: 18))
@@ -43,20 +44,20 @@ struct CharacterKeyView: View {
                             .strokeBorder(Color.black.opacity(0.4), lineWidth: 1),
                         alignment: .bottom
                     )
+                    .simultaneousGesture(
+                                    DragGesture(minimumDistance: 0)
+                                        .onChanged { _ in
+                                            showMagnified = true
+                                        }
+                                        .onEnded { _ in
+                                            showMagnified = false
+                                        }
+                                )
             }
+
         }.frame(width: width, height: 45)
     }
 
-    func showTappedAnimation() {
-        withAnimation(.easeIn(duration: 0.01)) {
-            showMagnified = true
-        }
-
-        // Hide with animation after delay
-        withAnimation(.easeOut(duration: 0.09).delay(0.09)) {
-            showMagnified = false
-        }
-    }
 }
 
 struct KeyboardToolbarStyle: ViewModifier {
@@ -348,17 +349,21 @@ struct MeroLipiKeyboardView: View {
     }
 
     func playAlphabetClickSound() {
-        KeyboardSoundManager.shared
-            .playSound(for: .alphabet)
+        DispatchQueue.global(qos: .userInitiated).async {
+              KeyboardSoundManager.shared.playSound(for: .alphabet)
+          }
     }
 
     func playDeleteSound() {
-        KeyboardSoundManager.shared
-            .playSound(for: .delete)
+        DispatchQueue.global(qos: .userInitiated).async {
+               KeyboardSoundManager.shared.playSound(for: .delete)
+           }
     }
 
     func playToolbarSound() {
-        KeyboardSoundManager.shared.playSound(for: .toolButton)
+        DispatchQueue.global(qos: .userInitiated).async {
+                KeyboardSoundManager.shared.playSound(for: .toolButton)
+            }
     }
 
     func removeText() {
@@ -426,4 +431,5 @@ struct MeroLipiKeyboardView: View {
         onDone: {},
         setKeyboardHeight: { _ in }
     )
+    .background(.red)
 }
