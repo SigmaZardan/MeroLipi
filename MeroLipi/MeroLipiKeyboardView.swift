@@ -188,16 +188,19 @@ struct MeroLipiKeyboardView: View {
             GeometryReader { proxy in
                 VStack {
                     if !isLandscapeMode {
-                        HStack(spacing: 50){
-                            ForEach(matchedSuggestions.prefix(3), id: \.self) { suggestion in
-                                Button {
-                                    onSuggestionClicked(suggestion: suggestion)
-                                    insertText(suggestion, true)
-                                }label: {
-                                    Text(suggestion)
-                                        .tint(AppColors.keyColor)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 50){
+                                ForEach(matchedSuggestions, id: \.self) { suggestion in
+                                    Button {
+                                        onSuggestionClicked(suggestion: suggestion)
+                                        insertText(suggestion, true)
+                                    }label: {
+                                        Text(suggestion)
+                                            .tint(AppColors.keyColor)
+                                    }
                                 }
                             }
+                            .frame(height: 35)
                         }
                         .frame(height: 35)
                     }
