@@ -72,7 +72,6 @@
 				AppColors.swift,
 				Assets.xcassets,
 				DBManager.swift,
-				first.txt,
 				KeyboardLayoutManager.swift,
 				KeyboardSoundManager.swift,
 				MeroLipiKeyboardView.swift,
