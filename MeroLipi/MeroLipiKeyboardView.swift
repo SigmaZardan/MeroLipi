@@ -239,7 +239,7 @@ struct MeroLipiKeyboardView: View {
                                 if isPressing {
                                     // Start a new timer only if one isn't already running
                                     if timer == nil {
-                                        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+                                        timer = Timer.scheduledTimer(withTimeInterval: 0.19, repeats: true) { _ in
                                             removeText()
                                         }
                                     }
