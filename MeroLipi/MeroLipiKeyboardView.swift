@@ -306,15 +306,6 @@ struct MeroLipiKeyboardView: View {
                                     self.selectedEmoji = ""
                                 }
                             }
-                            .onChange(of: isEmojiViewPresented) {
-                                DispatchQueue.main.async {
-                                    if isEmojiViewPresented {
-                                        setKeyboardHeight(350)
-                                    } else {
-                                        setKeyboardHeight(keyboardHeight)
-                                    }
-                                }
-                            }
                         }
                         KeyboardToolbarWithTextView(key: "space",width: proxy.size.width * 0.38) {
                             addText(key: " ")
