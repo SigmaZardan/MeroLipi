@@ -71,9 +71,12 @@
 			membershipExceptions = (
 				AppColors.swift,
 				Assets.xcassets,
+				DBManager.swift,
+				first.txt,
 				KeyboardLayoutManager.swift,
 				KeyboardSoundManager.swift,
 				MeroLipiKeyboardView.swift,
+				nepali_words.sqlite,
 			);
 			target = 6005A9602DAD62FD00AE8007 /* MeroLipiKeyboard */;
 		};
@@ -639,6 +642,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TWKXF2LT7F;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				MARKETING_VERSION = 1.0;
@@ -657,6 +661,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TWKXF2LT7F;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
 				MARKETING_VERSION = 1.0;

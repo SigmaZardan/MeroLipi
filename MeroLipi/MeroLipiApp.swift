@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 
+
 @main
 struct MeroLipiApp: App {
     var body: some Scene {
