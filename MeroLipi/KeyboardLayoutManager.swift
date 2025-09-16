@@ -50,7 +50,7 @@ class KeyboardLayoutManager {
     ]
 
     private let primarySecondLastLayout: [String] = [
-        "श", "ह", "आ", "ख", "द", "ल", "फ", ",", "र"
+        "श", "ह", "अ", "ख", "द", "ल", "फ", ",", "र"
     ]
 
     private let secondaryLayout: [[String]] = [
