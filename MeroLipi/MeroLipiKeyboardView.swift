@@ -20,16 +20,6 @@ struct CharacterKeyView: View {
 
     var body: some View {
         ZStack{
-            if showMagnified {
-                    Text(key)
-                        .font(.system(size: 30))
-                        .frame(width: width + 10, height:55)
-                        .tint(AppColors.keyColor)
-                        .background(AppColors.keyBackgroundColor)
-                        .cornerRadius(8)
-                        .offset(y: -50)
-                        .transition(.scale.combined(with: .opacity))
-            }
             Button {
                 onClick()
             } label: {
@@ -44,15 +34,6 @@ struct CharacterKeyView: View {
                             .strokeBorder(Color.black.opacity(0.4), lineWidth: 1),
                         alignment: .bottom
                     )
-                    .simultaneousGesture(
-                                    DragGesture(minimumDistance: 0)
-                                        .onChanged { _ in
-                                            showMagnified = true
-                                        }
-                                        .onEnded { _ in
-                                            showMagnified = false
-                                        }
-                                )
             }
 
         }.frame(width: width, height: 45)
