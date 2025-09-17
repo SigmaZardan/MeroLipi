@@ -17,14 +17,15 @@ struct FirstStepInstructionView: View {
             ScrollView {
                 VStack(spacing: 0){
                     OnboardingStepHeaderView(stepNumber: 1)
+                    InstructionView(
+                        iconName:"square.grid.3x3.fill",
+                        instruction: "Tap on Apps",
+                        instructionPortionToBold: "Apps"
+                    )
+                    InstructionView(instruction: "Tap on MeroLipi", instructionPortionToBold:"MeroLipi")
                     InstructionView(iconName: "hand.tap.fill", instruction: "Tap on Keyboards", instructionPortionToBold: "Keyboards")
                     InstructionView(iconName: "switch.2", instruction: "Turn on MeroLipi", instructionPortionToBold: "MeroLipi")
                     AcknowledgementView()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
                     Spacer()
                     SetupButton(buttonTitle: "Get Started", onClick:openSettings)
                         .padding(.vertical, 3)
@@ -47,7 +48,9 @@ struct FirstStepInstructionView: View {
             if let url = URL(
                 string: UIApplication.openSettingsURLString
             ) {
-                UIApplication.shared.open(url)
+                if UIApplication.shared.canOpenURL(url) {
+                       UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                   }
             }
     }
 

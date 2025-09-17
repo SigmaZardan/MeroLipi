@@ -30,6 +30,7 @@ struct WelcomeImageView: View {
     let height: CGFloat
 
     var body: some View {
+        if colorScheme == .light {
             Image(decorative: "home_screen_light_image")
                 .resizable()
                 .scaledToFit()
@@ -37,6 +38,7 @@ struct WelcomeImageView: View {
                 .shadow(color: Color.black.opacity(0.3), radius: 5, x: 0, y: 5)
                 .padding()
                 .padding()
+        }
     }
 }
 
