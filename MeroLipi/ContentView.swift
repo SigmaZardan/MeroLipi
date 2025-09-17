@@ -9,43 +9,6 @@ import SwiftUI
 import SwiftData
 
 
-@Observable
-class PathStore  {
-    var path: NavigationPath {
-        didSet {
-            save()
-        }
-    }
-    // create a path to save the navigation path
-    private let savePath = URL.documentsDirectory.appending(path: "SavedPath")
-    
-    init() {
-        if let data = try? Data(contentsOf: savePath) {
-            let decoder = JSONDecoder()
-            if let decoded = try? decoder.decode(NavigationPath.CodableRepresentation.self, from: data) {
-                path = NavigationPath(decoded)
-                return
-            }
-        }
-        
-        path = NavigationPath()
-    }
-    
-    func save() {
-        guard let representation = path.codable else {
-            return
-        }
-        
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(representation)
-            try data.write(to: savePath)
-        }
-        catch {
-            print("Failed to save navigation data.")
-        }
-    }
-}
 
 
 
