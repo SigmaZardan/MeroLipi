@@ -74,7 +74,7 @@ struct HomeView: View {
                 ZStack {
                     AppColors.background.ignoresSafeArea()
                     ScrollView {
-                        WelcomeImageView(height: proxy.size.height * 0.4)
+                        WelcomeImageView(height: proxy.size.height * 0.5)
                         VStack {
                             TitleAndButtonComponentView(
                                 title: "Add Mero Lipi keyboard?",
@@ -90,7 +90,7 @@ struct HomeView: View {
 
                     }
                 }
-                .navigationTitle("Home View")
+                .navigationTitle("Welcome To MeroLipi")
             }
 
         }
