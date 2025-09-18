@@ -17,7 +17,7 @@ struct ContentView: View {
     @AppStorage("showOnboardingScreenId") private var showingOnboardingScreen = true
     var body: some View {
         MainView()
-            .sheet(isPresented: $showingOnboardingScreen) {
+            .fullScreenCover(isPresented: $showingOnboardingScreen) {
                 OnboardingScreen(
                     showingOnboardingScreen: $showingOnboardingScreen
                 )
