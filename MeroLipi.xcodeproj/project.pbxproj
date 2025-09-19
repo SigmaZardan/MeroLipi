@@ -86,6 +86,13 @@
 			);
 			target = 60EB865A2DA2141C00CB64E7 /* MeroLipi */;
 		};
+		60D18A802E7C682500765FC6 /* Exceptions for "MeroLipi" folder in "MeroLipi" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 60EB865A2DA2141C00CB64E7 /* MeroLipi */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -101,6 +108,7 @@
 		60EB865D2DA2141C00CB64E7 /* MeroLipi */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				60D18A802E7C682500765FC6 /* Exceptions for "MeroLipi" folder in "MeroLipi" target */,
 				6005A9922DAD651900AE8007 /* Exceptions for "MeroLipi" folder in "MeroLipiKeyboard" target */,
 			);
 			path = MeroLipi;
@@ -586,9 +594,9 @@
 				DEVELOPMENT_TEAM = TWKXF2LT7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeroLipi/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -616,9 +624,9 @@
 				DEVELOPMENT_TEAM = TWKXF2LT7F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MeroLipi/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
